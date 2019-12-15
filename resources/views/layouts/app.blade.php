@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @notifyCss
 </head>
 <body>
     <div id="app">
@@ -72,8 +73,11 @@
             </div>
         </nav>
 
+       
+        @include('notify::messages')
         
     <main class="py-4">
+        @auth
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -83,7 +87,7 @@
                         </li>
 
                         <li class="list-group-item">
-                                <a href="">Categories</a>
+                                <a href="/categories">Categories</a>
                             </li>
                     </ul>
                 </div>
@@ -93,8 +97,13 @@
 
                 </div>
             </div>
+            @else
+            @yield('content')
+            @endauth
         </div>
-        </main>
+      </main>
     </div>
+
+    @notifyJs
 </body>
 </html>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
+use App\Http\Requests\CreateCategoryRequest;
 
 class CategoriesController extends Controller
 {
@@ -11,9 +13,15 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function validateRequest()
+    {
+        return request()->validate([
+            'name'=>'required|unique:categories'
+        ]);
+    }
     public function index()
     {
-        return view('categories.index');
+        return view('categories.index')->with('categories',Category::all());
     }
 
     /**
@@ -24,6 +32,7 @@ class CategoriesController extends Controller
     public function create()
     {
         //
+        return view("categories.create");
     }
 
     /**
@@ -32,9 +41,14 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
         //
+
+        Category::create($this->validateRequest());
+        //session()->flash('success','Category created seccusfully');
+        notify()->success('Laravel Notify is awesome!');
+        return redirect(route('categories.index'));
     }
 
     /**
@@ -54,9 +68,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
         //
+        return view('categories.create')->with('category',$category);
+
     }
 
     /**
@@ -66,9 +82,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         //
+        $category->update($this->validateRequest());
+        return redirect(route('categories.index'));
     }
 
     /**
