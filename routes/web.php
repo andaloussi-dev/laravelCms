@@ -24,4 +24,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('categories','CategoriesController');
-Route::resource('pots','PostsController');
+Route::resource('posts','PostsController');

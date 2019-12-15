@@ -19,7 +19,12 @@
                <tr>
                    <td>
                        {{$category->name}}
-                       <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-secondary float-right">Edit</a>
+                       <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-secondary float-right" >Edit</a>
+                       <form action="{{ route('categories.destroy',$category->id) }} " method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button class="btn btn-danger"> Delete</button>
+                       </form>
                    </td>
                </tr>
            @endforeach
