@@ -46,7 +46,7 @@ class CategoriesController extends Controller
         //
 
         Category::create($this->validateRequest());
-        //session()->flash('success','Category created seccusfully');
+        session()->flash('success','Category created seccusfully');
         notify()->success('Laravel Notify is awesome!');
         return redirect(route('categories.index'));
     }
@@ -99,6 +99,7 @@ class CategoriesController extends Controller
     {
         //
         $category->delete();
+        session()->flash('delete','Category deleted seccusfully');
         return redirect(route('categories.index'));
     }
 }
